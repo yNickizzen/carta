@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Carta 💌</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #0e0e0e;
+}
+
+/* FUNDO */
+.background {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  background: #0e0e0e;
+  overflow: hidden;
+  padding-bottom: 200px;
+}
+
+/* CORAÇÕES E TEXTOS */
+.bg-heart,
+.bg-love {
+  position: absolute;
+  user-select: none;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.bg-heart {
+  color: rgba(255,255,255,0.18);
+  font-family: 'Georgia', serif;
+}
+
+.bg-heart.small { font-size: 24px; }
+.bg-heart.medium { font-size: 44px; }
+.bg-heart.large { font-size: 78px; }
+
+.bg-love {
+  font-family: 'Georgia', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: rgba(255,230,240,0.7);
+  text-shadow: 0 0 8px rgba(255,160,190,0.35);
+}
+
+/* CONTAINER */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+  position: relative;
+  z-index: 5;
+}
+
+input { display: none; }
+label { cursor: pointer; }
+
+/* ENVELOPE */
+.envelope {
+  width: 500px;
+  height: 270px;
+  background: #ffffff;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.7);
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+}
+
+/* ABA */
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 250px solid transparent;
+  border-right: 250px solid transparent;
+  border-top: 150px solid #f1f1f1;
+  transform-origin: top center;
+  transition: transform 1s ease;
+  z-index: 3;
+}
+
+/* NOMES */
+.names {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 4;
+}
+
+.to { font-size: 17px; }
+.from { font-size: 14px; margin-top: 4px; color: #555; }
+
+/* CORAÇÃO */
+.heart {
+  width: 64px;
+  height: 64px;
+  background: #e74c6a;
+  position: absolute;
+  top: 118px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 6;
+  transition: all 0.9s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  width: 64px;
+  height: 64px;
+  background: #e74c6a;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart::before { top: -32px; left: 0; }
+.heart::after { left: -32px; top: 0; }
+
+.heart span {
+  transform: rotate(-45deg) translateY(-1px);
+  color: #ffd1dc;
+  font-weight: bold;
+  font-size: 22px;
+  text-shadow: 0 0 6px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+/* CARTA */
+.letter {
+  width: 92%;
+  max-width: 760px;
+  background: #ffffff;
+  margin-top: 45px;
+  padding: 45px;
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  line-height: 1.9;
+  color: #333;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.7);
+
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+/* ANIMAÇÕES */
+input:checked + label .flap {
+  transform: rotateX(180deg);
+}
+
+input:checked + label .heart {
+  transform: translate(-50%, 110px) rotate(45deg);
+  opacity: 0;
+}
+
+input:checked ~ .letter {
+  max-height: 6000px;
+  opacity: 1;
+}
+
+.hint {
+  margin-top: 18px;
+  font-family: Arial, sans-serif;
+  color: #aaa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+
+<!-- CORAÇÕES -->
+<div class="bg-heart small" style="top:5%; left:8%;">♡</div>
+<div class="bg-heart large" style="top:12%; left:45%;">♡</div>
+<div class="bg-heart medium" style="top:20%; left:75%;">♡</div>
+<div class="bg-heart small" style="top:30%; left:18%;">♡</div>
+<div class="bg-heart large" style="top:40%; left:60%;">♡</div>
+<div class="bg-heart medium" style="top:52%; left:82%;">♡</div>
+<div class="bg-heart small" style="top:64%; left:28%;">♡</div>
+<div class="bg-heart large" style="top:76%; left:55%;">♡</div>
+
+/* EU TE AMO MEU AMOR */
+<div class="bg-love" style="top:6%; left:10%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:14%; left:55%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:22%; left:30%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:30%; left:70%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:38%; left:15%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:46%; left:60%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:54%; left:35%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:62%; left:75%;">eu te amo meu amor</div>
+<div class="bg-love" style="top:70%; left:20%;">eu te amo meu amor</div>
+
+<div class="container">
+
+<input type="checkbox" id="openLetter">
+
+<label for="openLetter">
+  <div class="envelope">
+    <div class="flap"></div>
+
+    <div class="names">
+      <div class="to"><strong>Para: Nome dela</strong></div>
+      <div class="from">De: Seu nome</div>
+    </div>
+
+    <div class="heart"><span>11</span></div>
+  </div>
+</label>
+
+<div class="letter">
+<strong>Meu amor,</strong><br><br>
+
+Aqui vai sua carta.
+Escreva tudo que sentir, sem limite, sem medo,
+porque isso aqui é só nosso.<br><br>
+
+Feliz aniversário 🎂💖<br><br>
+
+Com todo meu amor,<br>
+<strong>Seu nome ❤️</strong>
+</div>
+
+<div class="hint">Clique na carta 💌</div>
+
+</div>
+</div>
+
+<audio id="music" src="musica.mp3"></audio>
+
+<script>
+const audio = document.getElementById("music");
+audio.volume = 0;
+
+document.getElementById("openLetter").addEventListener("change", function () {
+  if (this.checked) {
+    audio.play();
+    let v = 0;
+    const fade = setInterval(() => {
+      if (v < 0.9) {
+        v += 0.02;
+        audio.volume = v;
+      } else {
+        clearInterval(fade);
+      }
+    }, 120);
+  }
+});
+</script>
+
+</body>
+</html>
