@@ -8,48 +8,49 @@
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
   background: #0e0e0e;
+  font-family: 'Georgia', serif;
 }
 
-/* FUNDO */
 .background {
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  background: #0e0e0e;
   overflow: hidden;
-  padding-bottom: 200px;
+  padding-bottom: 1100px;
 }
 
-/* CORAÇÕES E TEXTOS */
-.bg-heart,
-.bg-love {
+/* ================= CORAÇÕES ================= */
+.bg-heart {
   position: absolute;
+  color: rgba(255,255,255,0.22);
   user-select: none;
-  white-space: nowrap;
+  pointer-events: none;
+}
+.bg-heart.small { font-size: 22px; }
+.bg-heart.medium { font-size: 44px; }
+.bg-heart.large { font-size: 86px; }
+
+/* ================= EU TE AMO ================= */
+.love-zone {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 850px;
+  pointer-events: none;
   z-index: 1;
 }
 
-.bg-heart {
-  color: rgba(255,255,255,0.18);
-  font-family: 'Georgia', serif;
-}
-
-.bg-heart.small { font-size: 24px; }
-.bg-heart.medium { font-size: 44px; }
-.bg-heart.large { font-size: 78px; }
-
 .bg-love {
-  font-family: 'Georgia', serif;
+  position: absolute;
   font-size: 22px;
   font-style: italic;
-  color: rgba(255,230,240,0.7);
-  text-shadow: 0 0 8px rgba(255,160,190,0.35);
+  color: rgba(255,170,210,0.75);
+  text-shadow: 0 0 8px rgba(255,140,190,0.45);
+  white-space: nowrap;
 }
 
-/* CONTAINER */
+/* ================= CARTA ================= */
 .container {
   display: flex;
   flex-direction: column;
@@ -60,96 +61,78 @@ html, body {
 }
 
 input { display: none; }
-label { cursor: pointer; }
 
-/* ENVELOPE */
 .envelope {
   width: 500px;
   height: 270px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 12px;
   position: relative;
   box-shadow: 0 12px 28px rgba(0,0,0,0.7);
-  overflow: hidden;
-  font-family: 'Georgia', serif;
+  overflow: visible;
 }
 
-/* ABA */
 .flap {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
   border-left: 250px solid transparent;
   border-right: 250px solid transparent;
   border-top: 150px solid #f1f1f1;
   transform-origin: top center;
   transition: transform 1s ease;
-  z-index: 3;
 }
 
-/* NOMES */
 .names {
   position: absolute;
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  z-index: 4;
 }
 
-.to { font-size: 17px; }
-.from { font-size: 14px; margin-top: 4px; color: #555; }
-
-/* CORAÇÃO */
 .heart {
-  width: 64px;
-  height: 64px;
+  width: 78px;
+  height: 78px;
   background: #e74c6a;
   position: absolute;
-  top: 118px;
+  top: 102px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  z-index: 6;
-  transition: all 0.9s ease;
-
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible;
+  z-index: 50;
 }
 
 .heart::before,
 .heart::after {
   content: "";
-  width: 64px;
-  height: 64px;
+  width: 78px;
+  height: 78px;
   background: #e74c6a;
   border-radius: 50%;
   position: absolute;
 }
-
-.heart::before { top: -32px; left: 0; }
-.heart::after { left: -32px; top: 0; }
+.heart::before { top: -39px; }
+.heart::after { left: -39px; }
 
 .heart span {
-  transform: rotate(-45deg) translateY(-1px);
+  transform: rotate(-45deg);
   color: #ffd1dc;
+  font-size: 30px;
   font-weight: bold;
-  font-size: 22px;
-  text-shadow: 0 0 6px rgba(0,0,0,0.3);
-  z-index: 10;
+  z-index: 60;
 }
 
-/* CARTA */
+/* ================= TEXTO ================= */
 .letter {
+  position: relative;
   width: 92%;
   max-width: 760px;
-  background: #ffffff;
+  background: #fff;
   margin-top: 45px;
-  padding: 45px;
-  font-family: 'Georgia', serif;
+  padding: 70px 45px 45px; /* ⬅ espaço pro botão */
   font-size: 18px;
   line-height: 1.9;
   color: #333;
@@ -159,113 +142,569 @@ label { cursor: pointer; }
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: all 1s ease;
+
+  transition: max-height 1s ease, opacity 1s ease;
 }
 
-/* ANIMAÇÕES */
-input:checked + label .flap {
-  transform: rotateX(180deg);
+.letter.show {
+  display: flex;
 }
 
+input:checked + label .flap { transform: rotateX(180deg); }
 input:checked + label .heart {
-  transform: translate(-50%, 110px) rotate(45deg);
+  transform: translate(-50%, 120px) rotate(45deg);
   opacity: 0;
 }
 
 input:checked ~ .letter {
-  max-height: 6000px;
+  max-height: 5000px;
   opacity: 1;
 }
 
-.hint {
-  margin-top: 18px;
-  font-family: Arial, sans-serif;
-  color: #aaa;
+/* ================= CONTADORES ================= */
+.counters {
+  margin-top: 160px;
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 110px;
 }
+
+.counter-box {
+  padding: 44px;
+  border-radius: 30px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.counter-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  background: linear-gradient(90deg,#ffd1dc,#ff9fbf,#ffd1dc);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.time-grid {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.time-box {
+  background: rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 18px 22px;
+  min-width: 90px;
+}
+
+.time-number {
+  font-size: 32px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.time-label {
+  font-size: 14px;
+  color: #ffd1dc;
+}
+
+.counter-date {
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(255,210,225,0.75);
+}
+
+/* CORES */
+.chat { box-shadow: 0 0 50px rgba(120,200,255,0.5); }
+.love { box-shadow: 0 0 50px rgba(255,150,200,0.55); }
+.future { box-shadow: 0 0 50px rgba(170,255,220,0.55); }
+.marriage { box-shadow: 0 0 50px rgba(255,215,120,0.55); }
+
+/* 🎉 COMEMORAÇÃO */
+.celebrate {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.celebrate span {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 2px;
+  animation: pop 1.2s ease-out forwards;
+}
+
+@keyframes pop {
+  from { transform: translateX(-50%) scale(1); opacity: 1; }
+  to { transform: translateX(-50%) translateY(-40px) scale(0.2); opacity: 0; }
+}
+
+/* 🔟 CONTAGEM REGRESSIVA */
+.countdown-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: fadeIn 0.3s ease;
+}
+
+.countdown-number {
+  font-size: 160px;
+  font-weight: bold;
+  color: #ffd1dc;
+  text-shadow: 0 0 40px rgba(255,180,220,1);
+  animation: pulse 1s ease infinite;
+}
+
+/* 🎉 CONFETE REAL */
+.confetti {
+  position: fixed;
+  top: -40px;
+  font-size: 28px;
+  animation: fall 3.5s linear forwards;
+  z-index: 99998;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 🌸 TELA FINAL */
+.final-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.92);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+.final-screen.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.final-box {
+  max-width: 700px;
+  padding: 50px 60px;
+  border-radius: 24px;
+  text-align: center;
+  background: linear-gradient(135deg, #ffd1dc, #ff9fbf);
+  color: #3a0f1c;
+  box-shadow: 0 0 80px rgba(255, 150, 200, 0.6);
+  animation: popIn 1.2s ease forwards;
+}
+
+.final-box h1 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.final-box p {
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.7) translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-letter {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  color: #ff5c8a;
+  font-size: 26px;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.close-letter:hover {
+  background: rgba(255, 120, 160, 0.35);
+  transform: scale(1.1);
+}
+
+.replay-btn {
+  margin: 60px auto 0;
+  padding: 20px 46px;
+  font-size: 20px;
+  border: none;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #ff9acb, #ff6fae);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 10px 35px rgba(255, 105, 180, 0.55);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.6s ease;
+
+  display: none;       /* 👈 escondido antes da data */
+  opacity: 0;
+}
+
+.replay-btn.show {
+  display: block;
+  opacity: 1;
+}
+
+.replay-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 16px 50px rgba(255, 105, 180, 0.8);
+}
+
+.replay-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.6);
+}
+
 </style>
 </head>
 
 <body>
 
+<audio id="music" src="musica.mp3" loop></audio>
+<audio id="tcharan" src="tcharan.mp3"></audio>
+
+
 <div class="background">
 
-<!-- CORAÇÕES -->
-<div class="bg-heart small" style="top:5%; left:8%;">♡</div>
-<div class="bg-heart large" style="top:12%; left:45%;">♡</div>
-<div class="bg-heart medium" style="top:20%; left:75%;">♡</div>
-<div class="bg-heart small" style="top:30%; left:18%;">♡</div>
-<div class="bg-heart large" style="top:40%; left:60%;">♡</div>
-<div class="bg-heart medium" style="top:52%; left:82%;">♡</div>
-<div class="bg-heart small" style="top:64%; left:28%;">♡</div>
-<div class="bg-heart large" style="top:76%; left:55%;">♡</div>
+<!-- EU TE AMO -->
+<div class="love-zone">
+  <div class="bg-love" style="top:8%; left:10%;">eu te amo, amor</div>
+  <div class="bg-love" style="top:18%; left:42%;">eu te amo, amor</div>
+  <div class="bg-love" style="top:28%; left:68%;">eu te amo, amor</div>
+  <div class="bg-love" style="top:38%; left:20%;">eu te amo, amor</div>
+  <div class="bg-love" style="top:48%; left:55%;">eu te amo, amor</div>
+  <div class="bg-love" style="top:58%; left:75%;">eu te amo, amor</div>
+  <div class="bg-love" style="top:68%; left:30%;">eu te amo, amor</div>
+</div>
 
-/* EU TE AMO MEU AMOR */
-<div class="bg-love" style="top:6%; left:10%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:14%; left:55%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:22%; left:30%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:30%; left:70%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:38%; left:15%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:46%; left:60%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:54%; left:35%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:62%; left:75%;">eu te amo meu amor</div>
-<div class="bg-love" style="top:70%; left:20%;">eu te amo meu amor</div>
+<!-- CORAÇÕES -->
+<div class="bg-heart large" style="top:6%; left:6%;">♡</div>
+<div class="bg-heart medium" style="top:14%; right:6%;">♡</div>
+<div class="bg-heart large" style="top:26%; left:2%;">♡</div>
+<div class="bg-heart medium" style="top:38%; right:4%;">♡</div>
+<div class="bg-heart large" style="top:52%; left:3%;">♡</div>
+<div class="bg-heart medium" style="top:66%; right:5%;">♡</div>
 
 <div class="container">
 
 <input type="checkbox" id="openLetter">
-
-<label for="openLetter">
+<label for="openLetter" onclick="tocarMusica()">
   <div class="envelope">
     <div class="flap"></div>
-
     <div class="names">
-      <div class="to"><strong>Para: Isabelly perfeita</strong></div>
-      <div class="from">De: Nicolas seu amor</div>
+      <strong>Para: Isabelly perfeita</strong><br>
+      <small>De: Nicolas</small>
     </div>
-
     <div class="heart"><span>11</span></div>
   </div>
 </label>
 
 <div class="letter">
-<strong>Minha princesinha,</strong><br><br>
+  <button class="close-letter" onclick="fecharCarta()">✕</button>
 
-Feliz Aniversário minha princesinha linda, você é meu orgulho!🎂💖<br><br>
-
-Quero que aproveite muito seu dia e que saiba que sempre estarei ao seu lado, sou muito, MUITO, <strong>MUITO</strong> grato em ter você em minha vida, que você continue sendo essa pessoa <strong>querida, atenciosa, gentil, educada, majestosa, divina, feliz, carinhosa, otimista, maravilhosa, perfeita e extremamente linda</strong> que você é, tudo em você é perfeito e só por eu tê-la em minha vida já sou tão grato e tão feliz que não tenho nem palavras pra descrever isso. Fiz esse site pensando em <strong>você</strong>, pensando em <strong>nós</strong>, ele irá ficar no ar para sempre então sempre que sentir saudade ou querer lembrar do quanto eu te amo, por favor, entre aqui, eu fiz esse espaço com muito carinho porque entendo o quanto você merece algo tão especial. Você é <strong>incrível</strong>, minha vida era uma antes de você e virou outra depois, o tanto que eu te amo e penso em você todos os dias é inexplicável, sei lá cara, você é <strong>TÃO-----</strong>💖💖... Eu não estou com muito tempo para criar textos muito longos afinal agora é 23:20 e falta 40 minutos pro seu aniversário, espero que realmente goste dessa surpresa porque deu bastante trabalho, <strong>eu te amo muito meu amor</strong>, aproveita seu dia.  <br><br>
-
-EU TE AMO MUITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO... (alguns infinitos "O" a mais),<br>
-<strong>Com carinho, o amor da sua vida ❤️</strong>
+  Quero que aproveite muito seu dia...
 </div>
 
-<div class="hint">Clique na carta 💌</div>
+<div class="counters">
+
+  <div class="counter-box chat" id="box1">
+    <div class="counter-title">💬 Desde o primeiro “oi”</div>
+    <div class="time-grid" id="c1"></div>
+    <div class="counter-date">desde 06/09/2025</div>
+  </div>
+
+  <div class="counter-box love" id="box2">
+    <div class="counter-title">❤️ Quando meu coração escolheu você</div>
+    <div class="time-grid" id="c2"></div>
+    <div class="counter-date">desde 25/01/2026</div>
+  </div>
+
+  <div class="counter-box future" id="box3">
+    <div class="counter-title">💑 Contagem regressiva para o nosso namoro</div>
+    <div class="time-grid" id="c3"></div>
+    <div class="counter-date" id="c3date"></div>
+  </div>
+
+  <div class="counter-box marriage">
+    <div class="counter-title">💍 Nosso para sempre</div>
+    <div class="time-grid">
+      <div class="time-box">
+        <span class="time-number">∞</span>
+        <span class="time-label">amor</span>
+      </div>
+    </div>
+    <div class="counter-date">um dia 💖</div>
+  </div>
 
 </div>
 </div>
-
-<audio id="music" src="musica.mp3"></audio>
+</div>
 
 <script>
-const audio = document.getElementById("music");
-audio.volume = 0;
+let tocou = false;
+function tocarMusica() {
+  if (!tocou) {
+    const music = document.getElementById("music");
+    const tcharan = document.getElementById("tcharan");
 
-document.getElementById("openLetter").addEventListener("change", function () {
-  if (this.checked) {
-    audio.play();
-    let v = 0;
-    const fade = setInterval(() => {
-      if (v < 0.9) {
-        v += 0.02;
-        audio.volume = v;
-      } else {
-        clearInterval(fade);
-      }
-    }, 120);
+    music.play();
+
+    // desbloqueia o tcharan (truque de browser)
+    tcharan.volume = 0;
+    tcharan.play().then(() => {
+      tcharan.pause();
+      tcharan.currentTime = 0;
+      tcharan.volume = 1;
+    });
+
+    tocou = true;
   }
-});
+}
+
+function fecharCarta() {
+  document.getElementById("openLetter").checked = false;
+}
+
+const chatStart = new Date("2025-09-06T19:58:24");
+const loveStart = new Date("2026-01-25T16:01:40");
+const namoroDate = new Date("2026-02-01T23:30:00");
+
+const c1 = document.getElementById("c1");
+const c2 = document.getElementById("c2");
+const c3 = document.getElementById("c3");
+const c3date = document.getElementById("c3date");
+
+const box1 = document.getElementById("box1");
+const box2 = document.getElementById("box2");
+const box3 = document.getElementById("box3");
+
+let last = {};
+let eventoDisparou = false;
+let countdownMostrado = false;
+let replayEmAndamento = false;
+
+function fecharTelaFinal() {
+  document.getElementById("finalScreen").classList.remove("show");
+}
+
+/* 🎉 CONFETE DE VERDADE */
+function confeteChuva(qtd = 80) {
+  const emojis = ["💖","💕","✨","🎊","💘","💞"];
+
+  for (let i = 0; i < qtd; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = 2.5 + Math.random() * 2 + "s";
+    c.style.fontSize = 22 + Math.random() * 26 + "px";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+
+/* 🔟 CONTAGEM REGRESSIVA GIGANTE */
+function contagemGigante(segundos) {
+  const overlay = document.createElement("div");
+  overlay.className = "countdown-overlay";
+
+  const num = document.createElement("div");
+  num.className = "countdown-number";
+  overlay.appendChild(num);
+  document.body.appendChild(overlay);
+
+  let atual = segundos;
+  num.textContent = atual;
+
+  const intervalo = setInterval(() => {
+    atual--;
+    if (atual > 0) {
+      num.textContent = atual;
+    } else {
+      clearInterval(intervalo);
+      overlay.remove();
+    }
+  }, 1000);
+}
+
+/* 💖 TEXTO FINAL */
+function amorGigante() {
+  const som = document.getElementById("tcharan");
+  if (som) {
+    som.currentTime = 0;
+    som.play();
+  }
+
+  const div = document.createElement("div");
+  div.style.position = "fixed";
+  div.style.inset = "0";
+  div.style.display = "flex";
+  div.style.alignItems = "center";
+  div.style.justifyContent = "center";
+  div.style.fontSize = "82px";
+  div.style.fontWeight = "bold";
+  div.style.color = "#ffd1dc";
+  div.style.background = "rgba(0,0,0,0.78)";
+  div.style.zIndex = "99999";
+  div.style.textShadow = "0 0 60px rgba(255,180,220,1)";
+  div.style.animation = "pulse 1.2s ease infinite";
+  div.textContent = "💖 ESTAMOS NAMORANDO 💖";
+
+  document.body.appendChild(div);
+
+  // confete contínuo enquanto o texto estiver na tela
+  const chuva = setInterval(() => confeteChuva(35), 700);
+
+  setTimeout(() => {
+    clearInterval(chuva);
+    div.remove();
+  }, 6500); // ⏳ agora dura bem mais
+}
+
+/* ⏱️ CONTADORES */
+function render(el, diff, box, key) {
+  diff = Math.max(0, Math.floor(diff));
+  const d = Math.floor(diff / 86400);
+  const h = Math.floor(diff % 86400 / 3600);
+  const m = Math.floor(diff % 3600 / 60);
+  const s = diff % 60;
+
+  last[key] = { d, h, m };
+
+  el.innerHTML = `
+    <div class="time-box"><span class="time-number">${d}</span><span class="time-label">dias</span></div>
+    <div class="time-box"><span class="time-number">${h}</span><span class="time-label">horas</span></div>
+    <div class="time-box"><span class="time-number">${m}</span><span class="time-label">min</span></div>
+    <div class="time-box"><span class="time-number">${s}</span><span class="time-label">seg</span></div>
+  `;
+}
+
+function mostrarTelaFinal() {
+  const tela = document.getElementById("finalScreen");
+  setTimeout(() => {
+    tela.classList.add("show");
+  }, 1500); // aparece um pouquinho depois do "estamos namorando"
+}
+
+/* 🔁 LOOP */
+const intervaloPrincipal = setInterval(() => {
+  const now = new Date();
+
+  render(c1, (now - chatStart) / 1000, box1, "c1");
+  render(c2, (now - loveStart) / 1000, box2, "c2");
+
+  if (now < namoroDate) {
+    render(c3, (namoroDate - now) / 1000, box3, "c3");
+    c3date.textContent = "até 02/02/2026";
+  } else {
+
+    // ⚠️ PROTEÇÃO ABSOLUTA CONTRA LOOP
+    if (eventoDisparou) return;
+
+    render(c3, (now - namoroDate) / 1000, box3, "c3");
+    c3date.textContent = "desde 02/02/2026 💖";
+
+    eventoDisparou = true; // 🔒 trava tudo
+
+document.getElementById("replayBtn").classList.add("show");
+
+    amorGigante();
+    confeteChuva(120);
+    setTimeout(() => confeteChuva(100), 800);
+    setTimeout(() => confeteChuva(80), 1600);
+    mostrarTelaFinal();
+
+    clearInterval(intervaloPrincipal); // 🛑 PARA O LOOP
+  }
+}, 1000);
+
+function reproduzirEvento() {
+  if (replayEmAndamento) return;
+  replayEmAndamento = true;
+
+  // Fecha tela final se estiver aberta
+  const final = document.getElementById("finalScreen");
+  if (final) final.classList.remove("show");
+
+  // Reproduz tudo novamente
+  setTimeout(() => {
+    amorGigante();
+    confeteChuva(140);
+    setTimeout(() => confeteChuva(120), 800);
+    setTimeout(() => confeteChuva(100), 1600);
+    mostrarTelaFinal();
+
+    // libera novo replay depois que acabar
+    setTimeout(() => {
+      replayEmAndamento = false;
+    }, 8000);
+  }, 300);
+}
+
 </script>
+
+<div class="final-screen" id="finalScreen">
+  <div class="final-box" style="position: relative;">
+    <button class="close-letter" onclick="fecharTelaFinal()">✕</button>
+    <h1>💖 Agora é oficial 💖</h1>
+    <p>
+      Hoje começa uma nova história.<br><br>
+      Não é só um namoro,<br>
+      é a escolha diária de caminhar juntos,<br>
+      rir, cuidar, sonhar e amar.<br><br>
+      Obrigado por ser você.<br>
+      Eu te amo. 💌
+    </p>
+  </div>
+</div>
+
+<button id="replayBtn" class="replay-btn" onclick="reproduzirEvento()">
+  💖 Ver esse momento novamente
+</button>
 
 </body>
 </html>
-
-
